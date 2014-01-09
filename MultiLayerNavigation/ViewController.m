@@ -33,6 +33,21 @@
     [button addTarget:self action:@selector(pressBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
+    UIButton *buttonPre = [[[UIButton alloc]initWithFrame:CGRectMake(10, 300, 300, 50)]autorelease];
+    [buttonPre setBackgroundColor:[UIColor grayColor]];
+    [buttonPre setTitle:@"present a new NavigationController" forState:UIControlStateNormal];
+    [buttonPre addTarget:self action:@selector(presentNavigationController:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:buttonPre];
+    
+    if (self.presentingViewController) {
+        //if this controller is presented,show "pop" button
+        UIButton *buttonPop = [[[UIButton alloc]initWithFrame:CGRectMake(10, 360, 300, 50)]autorelease];
+        [buttonPop setBackgroundColor:[UIColor grayColor]];
+        [buttonPop setTitle:@"dismiss self presented" forState:UIControlStateNormal];
+        [buttonPop addTarget:self action:@selector(dismissSelf:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:buttonPop];
+    }
+
     self.view.backgroundColor = [UIColor whiteColor];
     
     if (self.navigationController.viewControllers.count > 1) {
@@ -53,6 +68,23 @@
 }
 
 #pragma mark - User Interaction -
+
+- (void)dismissSelf:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)presentNavigationController:(id)sender{
+    ViewController *vc = [[[ViewController alloc]init]autorelease];
+    MLNavigationController *nacVC = [[[MLNavigationController alloc]initWithRootViewController:vc]autorelease];
+    
+    //Attention: below a line code very importance!
+    [nacVC setTopView:nacVC.view];
+    
+    nacVC.title = @"present";
+    [self presentModalViewController:nacVC animated:YES];
+}
 
 - (void)pressBtn:(UIButton *)sender
 {

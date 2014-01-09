@@ -13,4 +13,6 @@
 // Enable the drag to back interaction, Defalt is YES.
 @property (nonatomic,assign) BOOL canDragBack;
 
+@property (nonatomic, assign, getter = getTopView) UIView *topView;
+
 @end
